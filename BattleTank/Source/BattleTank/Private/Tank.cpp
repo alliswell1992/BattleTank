@@ -28,8 +28,7 @@ void ATank::Tick(float DeltaTime)
 }
 
 void ATank::AimAt(FVector HitLocation) {
-	TankAimingComponent->AimAt(HitLocation);
-
+	TankAimingComponent->AimAt(HitLocation, LaunchSpeed);
 }
 
 
@@ -38,5 +37,9 @@ void ATank::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 
+}
+
+void ATank::SetBarrelReference(UTankBarrel* BarrelToSet) {
+	TankAimingComponent->SetBarrelReference(BarrelToSet);
 }
 
