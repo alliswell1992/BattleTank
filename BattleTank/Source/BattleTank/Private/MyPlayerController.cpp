@@ -2,7 +2,7 @@
 
 
 #include "MyPlayerController.h"
-
+#include "Tank.h"
 
 
 void AMyPlayerController::BeginPlay() {

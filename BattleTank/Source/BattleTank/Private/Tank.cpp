@@ -2,12 +2,14 @@
 
 
 #include "Tank.h"
+#include "TankAimingComponent.h"
 
+class UTankAimingComponent;
 // Sets default values
 ATank::ATank()
 {
  	// Set this pawn to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
-	PrimaryActorTick.bCanEverTick = true;
+	PrimaryActorTick.bCanEverTick = false;
 	// no need to protect points as added at component
 	TankAimingComponent = CreateDefaultSubobject<UTankAimingComponent>(FName("Aiming Component"));
 }
@@ -18,13 +20,6 @@ void ATank::BeginPlay()
 {
 	Super::BeginPlay();
 	
-}
-
-// Called every frame
-void ATank::Tick(float DeltaTime)
-{
-	Super::Tick(DeltaTime);
-
 }
 
 void ATank::AimAt(FVector HitLocation) {
@@ -41,5 +36,13 @@ void ATank::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 
 void ATank::SetBarrelReference(UTankBarrel* BarrelToSet) {
 	TankAimingComponent->SetBarrelReference(BarrelToSet);
+}
+
+void ATank::SetTarrelReference(UTankTarrel* TarrelToSet) {
+	TankAimingComponent->SetTarrelReference(TarrelToSet);
+}
+
+void ATank::Firing() {
+	UE_LOG(LogTemp, Warning, TEXT("Firing"));
 }
 

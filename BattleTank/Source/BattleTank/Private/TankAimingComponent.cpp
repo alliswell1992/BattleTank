@@ -4,12 +4,13 @@
 #include "TankAimingComponent.h"
 #include "Kismet/GameplayStatics.h"
 #include "TankBarrel.h"
+#include "Tanktarrel.h"
 // Sets default values for this component's properties
 UTankAimingComponent::UTankAimingComponent()
 {
 	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
 	// off to improve performance if you don't need them.
-	PrimaryComponentTick.bCanEverTick = true;
+	PrimaryComponentTick.bCanEverTick = false;
 
 	// ...
 }
@@ -35,15 +36,20 @@ void UTankAimingComponent::TickComponent(float DeltaTime, ELevelTick TickType, F
 
 void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed) {
 	//auto MyName = GetOwner()->GetName();
-	if (!Barrel) {
+	if (!Barrel||!Tarrel) {
 		return;
 	}
 	FVector OutLaunchVelocity;
 	FVector StartLocation = Barrel->GetSocketLocation(FName("Projectile"));
 	if (UGameplayStatics::SuggestProjectileVelocity(this, OutLaunchVelocity, StartLocation, HitLocation, LaunchSpeed, false, 0, 0, ESuggestProjVelocityTraceOption::DoNotTrace)) {
 		auto AimDirection = OutLaunchVelocity.GetSafeNormal();
-		
+		MoveTarrelTowards(AimDirection);
 		MoveBarrelTowards(AimDirection);
+		
+		//UE_LOG(LogTemp, Warning, TEXT("aiming solution found"));
+	}
+	else {
+		//UE_LOG(LogTemp, Warning, TEXT("no aiming solution found"));
 	}
 	
 }
@@ -53,11 +59,24 @@ void UTankAimingComponent::MoveBarrelTowards(FVector AimDirection) {
 	auto BarrelRotator = Barrel->GetForwardVector().Rotation();
 	auto AimAsRotator = AimDirection.Rotation();
 	auto DeltaRotator = AimAsRotator - BarrelRotator;
-	Barrel->Elevate(5);
+
+	Barrel->Elevate(DeltaRotator.Pitch);
+}
+
+void UTankAimingComponent::MoveTarrelTowards(FVector AimDirection) {
+	//work-out difference bettween tarrel current rotation and aim direction
+	auto TarrelRotator = Tarrel->GetForwardVector().Rotation();
+	auto AimAsRotator = AimDirection.Rotation();
+	auto DeltaRotator = AimAsRotator - TarrelRotator;
+	Tarrel->Rotate(DeltaRotator.Yaw);
 }
 
 void UTankAimingComponent::SetBarrelReference(UTankBarrel* BarrelToSet) {
 	Barrel = BarrelToSet;
+}
+
+void UTankAimingComponent::SetTarrelReference(UTankTarrel* TarrelToSet) {
+	Tarrel = TarrelToSet;
 }
 
 
