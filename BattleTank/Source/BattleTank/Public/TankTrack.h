@@ -19,5 +19,5 @@ public:
 	void SetThrottle(float Throtile);
 	// max force per trace in newtons
 	UPROPERTY(EditDefaultsOnly)
-	float TraceMaxDrivingFroce = 400000.; // assume 40000 kg(40 tonne) tank , and 10 m per second per second(1g) accelleration
+	float TraceMaxDrivingFroce = 40000000.; // assume 40000 kg(40 tonne) tank , and 10 m per second per second(1g) accelleration
 };

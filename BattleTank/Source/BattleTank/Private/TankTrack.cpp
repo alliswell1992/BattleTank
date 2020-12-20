@@ -4,10 +4,9 @@
 #include "TankTrack.h"
 
 void UTankTrack::SetThrottle(float Throtile) {
-
-	//TODO clamp actual throttle value so player con't over-drive
 	auto ForceApplied = GetForwardVector() * Throtile * TraceMaxDrivingFroce;
 	auto ForceLocation = GetComponentLocation();
 	auto TankRoot = Cast<UPrimitiveComponent>(GetOwner()->GetRootComponent());
 	TankRoot->AddForceAtLocation(ForceApplied, ForceLocation);
+	//UE_LOG(LogTemp, Warning, TEXT("set throtile: %f"), Throtile);
 }
