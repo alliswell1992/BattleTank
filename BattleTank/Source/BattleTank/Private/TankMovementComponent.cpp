@@ -25,6 +25,16 @@ void UTankMovementComponent::IntendTurnRight(float Throw) {
 	// TODO prevent double speed due to control use
 }
 
+void UTankMovementComponent::RequestDirectMove(const FVector& MoveVelocity, bool bForceMaxSpeed) {
+	// no need to call super as we're replacing the functionality
+	auto TankForward = GetOwner()->GetActorForwardVector().GetSafeNormal();
+	auto AiForwardIntention = MoveVelocity.GetSafeNormal();
+	auto ForwardThrow = FVector::DotProduct(TankForward, AiForwardIntention);
+	UE_LOG(LogTemp, Warning, TEXT(" vectoring to"))
+	IntendMoveForward(ForwardThrow);
+
+}
+
 void UTankMovementComponent::Initialise(UTankTrack* LeftTrackToSet, UTankTrack* RightTrackToSet) {
 
 	LeftTrack = LeftTrackToSet;

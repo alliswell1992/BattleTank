@@ -17,5 +17,7 @@ public:
 private:
 	//ATank* GetControlledTank() const;
 	//ATank* GetPLayerTank() const;
+	// how close can ai tank get
+	float AcceptanceRadius = 3000.;
 
 };

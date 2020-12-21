@@ -38,7 +38,7 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Setup")
 	void SetTarrelReference(UTankTarrel* TarrelToSet);
 	UPROPERTY(EditAnywhere, Category = "Firing")
-	float LaunchSpeed = 40000.; // sensible starting value of 1000 m/s000000
+	float LaunchSpeed = 4000.; // sensible starting value of 1000 m/s000000
 	UFUNCTION(BlueprintCallable, Category = "Setup")
 	void Firing();
 private:
