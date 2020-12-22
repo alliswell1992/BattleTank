@@ -5,14 +5,10 @@
 #include "TankTrack.h"
 
 void UTankMovementComponent::IntendMoveForward(float Throw) {
-	if (!LeftTrack || !RightTrack) {
-		return;
-	}
+	if (!LeftTrack || !RightTrack) { return; }
 	//UE_LOG(LogTemp, Warning, TEXT("intent move forward: %f"), Throw);
 	LeftTrack->SetThrottle(Throw);
-	RightTrack->SetThrottle(Throw);
-	return;
-	// TODO prevent double speed due to control use
+	RightTrack->SetThrottle(Throw);	
 }
 void UTankMovementComponent::IntendTurnRight(float Throw) {
 	if (!LeftTrack || !RightTrack) {
@@ -21,8 +17,6 @@ void UTankMovementComponent::IntendTurnRight(float Throw) {
 	//UE_LOG(LogTemp, Warning, TEXT("intent move forward: %f"), Throw);
 	LeftTrack->SetThrottle(Throw);
 	RightTrack->SetThrottle(-Throw);
-	return;
-	// TODO prevent double speed due to control use
 }
 
 void UTankMovementComponent::RequestDirectMove(const FVector& MoveVelocity, bool bForceMaxSpeed) {
@@ -30,8 +24,11 @@ void UTankMovementComponent::RequestDirectMove(const FVector& MoveVelocity, bool
 	auto TankForward = GetOwner()->GetActorForwardVector().GetSafeNormal();
 	auto AiForwardIntention = MoveVelocity.GetSafeNormal();
 	auto ForwardThrow = FVector::DotProduct(TankForward, AiForwardIntention);
-	UE_LOG(LogTemp, Warning, TEXT(" vectoring to"))
+	
 	IntendMoveForward(ForwardThrow);
+	auto RightThrow = FVector::CrossProduct(TankForward, AiForwardIntention).Z;
+	IntendTurnRight(RightThrow);
+	//UE_LOG(LogTemp, Warning, TEXT(" fight :%f , forward: %f"), RightThrow, ForwardThrow)
 
 }
 

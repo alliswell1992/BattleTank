@@ -17,9 +17,9 @@ public:
 
 	virtual void BeginPlay() override;
 	virtual void Tick(float DeltaTime) override;
-
-private:
+	UFUNCTION(BlueprintCallable, Category = "Setup")
 	ATank* GetControlledTank() const;
+private:
 	// move the tank tarrel so that a shot would hit where the crosshair intersects the world
 	void AimTowardsCrosshair();
 	// return an out parameter, true if hit landscape

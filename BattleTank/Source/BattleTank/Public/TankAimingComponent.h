@@ -5,6 +5,13 @@
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
 #include "TankAimingComponent.generated.h"
+// fire status
+UENUM()
+enum class EFireStatus : uint8 {
+	Reloading,
+	Aming,
+	Locked
+};
 // forward declaration
 class UTankBarrel; 
 class UTankTarrel;
@@ -20,17 +27,19 @@ public:
 protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
-
+	UPROPERTY(BlueprintReadOnly, Category = "State")
+	EFireStatus FireStatus = EFireStatus::Reloading;
 public:	
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 	void AimAt(FVector HitLocation, float LaunchSpeed);
-	void SetBarrelReference(UTankBarrel* BarrelToSet);
-	void SetTarrelReference(UTankTarrel* TarrelToSet);
+	//void SetBarrelReference(UTankBarrel* BarrelToSet);
+	//void SetTarrelReference(UTankTarrel* TarrelToSet);
+	UFUNCTION(BlueprintCallable, Category = "Setup")
+	void InitialiseAiming(UTankBarrel* BarrelToSet, UTankTarrel* TarrelToSet);
 private:
 	UTankBarrel* Barrel = nullptr;
 	UTankTarrel* Tarrel = nullptr;
 	void MoveBarrelTowards(FVector);
 	void MoveTarrelTowards(FVector);
-		
 };
