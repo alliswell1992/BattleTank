@@ -15,24 +15,14 @@ UTankAimingComponent::UTankAimingComponent()
 	// ...
 }
 
-
-// Called when the game starts
-void UTankAimingComponent::BeginPlay()
-{
-	Super::BeginPlay();
-
-	// ...
-	
-}
-
-
-// Called every frame
+// Called every frame 
+/*
 void UTankAimingComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
 	// ...
-}
+}*/
 
 void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed) {
 	//auto MyName = GetOwner()->GetName();
@@ -43,7 +33,7 @@ void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed) {
 	FVector StartLocation = Barrel->GetSocketLocation(FName("Projectile"));
 	if (UGameplayStatics::SuggestProjectileVelocity(this, OutLaunchVelocity, StartLocation, HitLocation, LaunchSpeed, false, 0, 0, ESuggestProjVelocityTraceOption::DoNotTrace)) {
 		auto AimDirection = OutLaunchVelocity.GetSafeNormal();
-		MoveTarrelTowards(AimDirection);
+		//MoveTarrelTowards(AimDirection);
 		MoveBarrelTowards(AimDirection);
 		
 		//UE_LOG(LogTemp, Warning, TEXT("aiming solution found"));
@@ -60,14 +50,15 @@ void UTankAimingComponent::InitialiseAiming(UTankBarrel* BarrelToSet, UTankTarre
 }
 
 void UTankAimingComponent::MoveBarrelTowards(FVector AimDirection) {
+	if (!Barrel || !Tarrel) { return; }
 	//work-out difference bettween barrel current rotation and aim direction
 	auto BarrelRotator = Barrel->GetForwardVector().Rotation();
 	auto AimAsRotator = AimDirection.Rotation();
 	auto DeltaRotator = AimAsRotator - BarrelRotator;
 
 	Barrel->Elevate(DeltaRotator.Pitch);
-}
-
+	Tarrel->Rotate(DeltaRotator.Yaw);
+}/*
 void UTankAimingComponent::MoveTarrelTowards(FVector AimDirection) {
 	//work-out difference bettween tarrel current rotation and aim direction
 	auto TarrelRotator = Tarrel->GetForwardVector().Rotation();
@@ -75,7 +66,7 @@ void UTankAimingComponent::MoveTarrelTowards(FVector AimDirection) {
 	auto DeltaRotator = AimAsRotator - TarrelRotator;
 	Tarrel->Rotate(DeltaRotator.Yaw);
 }
-/*
+
 void UTankAimingComponent::SetBarrelReference(UTankBarrel* BarrelToSet) {
 	Barrel = BarrelToSet;
 }

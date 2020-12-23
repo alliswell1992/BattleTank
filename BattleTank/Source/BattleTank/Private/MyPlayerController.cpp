@@ -3,7 +3,7 @@
 
 #include "MyPlayerController.h"
 #include "Tank.h"
-
+#include "TankAimingComponent.h"
 
 void AMyPlayerController::BeginPlay() {
 	Super::BeginPlay();
@@ -15,6 +15,13 @@ void AMyPlayerController::BeginPlay() {
 	else{
 		UE_LOG(LogTemp, Warning, TEXT("controlled tank is %s"), *ControlledTank->GetName());
 	}*/
+	auto AmingComponent = GetControlledTank()->FindComponentByClass<UTankAimingComponent>();
+	if (AmingComponent) {
+		FoundAimingComponent(AmingComponent);
+	}
+	else {
+		UE_LOG(LogTemp, Warning, TEXT("player controlled can't find aming component at begin play"));
+	}
 }
 
 void AMyPlayerController::Tick(float DeltaTime) {
@@ -23,7 +30,7 @@ void AMyPlayerController::Tick(float DeltaTime) {
 }
 
 void AMyPlayerController::AimTowardsCrosshair() {
-	if (!GetControlledTank()) {
+	if (!ensure(GetControlledTank())) {
 		return;
 	}
 	FVector OutHitLocation;

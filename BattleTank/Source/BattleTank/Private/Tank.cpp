@@ -20,22 +20,25 @@ ATank::ATank()
 // Called when the game starts or when spawned
 void ATank::BeginPlay()
 {
-	Super::BeginPlay();
+	Super::BeginPlay();// needed for BP begin play to run 
 	
 }
 
 void ATank::AimAt(FVector HitLocation) {
+	if (!TankAimingComponent) { 
+		return;
+	}
 	TankAimingComponent->AimAt(HitLocation, LaunchSpeed);
 }
 
 
 // Called to bind functionality to input
-void ATank::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
+/*void ATank::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 
 }
-/*
+
 void ATank::SetBarrelReference(UTankBarrel* BarrelToSet) {
 	TankAimingComponent->SetBarrelReference(BarrelToSet);
 	Barrel = BarrelToSet;
@@ -46,8 +49,11 @@ void ATank::SetTarrelReference(UTankTarrel* TarrelToSet) {
 */
 
 void ATank::Firing() {
+	if (!ensure(Barrel)) {
+		return;
+	}
 	bool isReloaded = (FPlatformTime::Seconds() - LastFireTime) > ReloadTimeInSeconds;
-	if (Barrel && isReloaded) {
+	if (isReloaded) { //
 		// spawn a projectile at the socket on the barrel
 		auto Projectile = GetWorld()->SpawnActor<AProjectile>(ProjectileBlueprint, Barrel->GetSocketLocation(FName("Projectile")), Barrel->GetSocketRotation(FName("Projectile")));
 		Projectile->LaunchProjectile(LaunchSpeed);
