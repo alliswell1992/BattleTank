@@ -6,11 +6,10 @@
 #include "GameFramework/Pawn.h"
 #include "Tank.generated.h"
 
-class UTankBarrel;
-class UTankAimingComponent;
-class UTankTarrel;
-class AProjectile;
-class UTankMovementComponent;
+//class UTankBarrel;
+//class UTankAimingComponent;
+//class UTankTarrel;
+//class AProjectile;
 UCLASS()
 class BATTLETANK_API ATank : public APawn
 {
@@ -18,10 +17,10 @@ class BATTLETANK_API ATank : public APawn
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
-	UPROPERTY(BlueprintReadOnly)
-	UTankAimingComponent* TankAimingComponent = nullptr;
-	UPROPERTY(BlueprintReadOnly)
-	UTankMovementComponent* TankMovementComponent = nullptr;
+	/*UPROPERTY(BlueprintReadOnly)
+	UTankAimingComponent* TankAimingComponent = nullptr;*/
+	//UPROPERTY(BlueprintReadOnly)
+	//UTankMovementComponent* TankMovementComponent = nullptr;
 
 public:	
 
@@ -32,19 +31,17 @@ public:
 	void SetBarrelReference(UTankBarrel* BarrelToSet);
 	UFUNCTION(BlueprintCallable, Category = "Setup")
 	void SetTarrelReference(UTankTarrel* TarrelToSet); */
-	UPROPERTY(EditAnywhere, Category = "Firing")
-	float LaunchSpeed = 4000.; // sensible starting value of 1000 m/s000000
-	UFUNCTION(BlueprintCallable, Category = "Setup")
-	void Firing();
+/*	UPROPERTY(EditAnywhere, Category = "Firing")
+	float LaunchSpeed = 4000.; */// sensible starting value of 1000 m/s000000
+	//UFUNCTION(BlueprintCallable, Category = "Setup")
+	//void Firing();
 	// Sets default values for this pawn's properties
 	ATank();
-	void AimAt(FVector HitLocation);
+	//void AimAt(FVector HitLocation);
 private:
-	UPROPERTY(EditAnywhere, Category = "Setup")
-	UTankBarrel* Barrel = nullptr;
-	UPROPERTY(EditAnywhere, Category = "Setup")
-	TSubclassOf<AProjectile> ProjectileBlueprint;
-	UPROPERTY(EditDefaultsOnly, Category = "Firing")
-	float ReloadTimeInSeconds = 3;
-	double LastFireTime = 0;
+
+	//UTankBarrel* Barrel = nullptr;
+	//UPROPERTY(EditDefaultsOnly, Category = "Firing")
+	//float ReloadTimeInSeconds = 3;
+	//double LastFireTime = 0;
 };

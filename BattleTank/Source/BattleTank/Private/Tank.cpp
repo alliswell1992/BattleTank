@@ -1,11 +1,9 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-#include "Projectile.h"
+//#include "Projectile.h"
 #include "Tank.h"
-#include "TankAimingComponent.h"
-#include "TankBarrel.h"
-#include "TankMovementComponent.h"
-class UTankAimingComponent;
+//#include "TankAimingComponent.h"
+//#include "TankBarrel.h"
 // Sets default values
 ATank::ATank()
 {
@@ -21,15 +19,15 @@ ATank::ATank()
 void ATank::BeginPlay()
 {
 	Super::BeginPlay();// needed for BP begin play to run 
-	
+	//TankAimingComponent = FindComponentByClass<UTankAimingComponent>();
 }
 
-void ATank::AimAt(FVector HitLocation) {
-	if (!TankAimingComponent) { 
-		return;
-	}
-	TankAimingComponent->AimAt(HitLocation, LaunchSpeed);
-}
+//void ATank::AimAt(FVector HitLocation) {
+//	if (!ensure(TankAimingComponent)) { 
+//		return;
+//	}
+//	TankAimingComponent->AimAt(HitLocation, LaunchSpeed);
+//}
 
 
 // Called to bind functionality to input
@@ -47,20 +45,20 @@ void ATank::SetBarrelReference(UTankBarrel* BarrelToSet) {
 void ATank::SetTarrelReference(UTankTarrel* TarrelToSet) {
 	TankAimingComponent->SetTarrelReference(TarrelToSet);
 */
-
-void ATank::Firing() {
-	if (!ensure(Barrel)) {
-		return;
-	}
-	bool isReloaded = (FPlatformTime::Seconds() - LastFireTime) > ReloadTimeInSeconds;
-	if (isReloaded) { //
-		// spawn a projectile at the socket on the barrel
-		auto Projectile = GetWorld()->SpawnActor<AProjectile>(ProjectileBlueprint, Barrel->GetSocketLocation(FName("Projectile")), Barrel->GetSocketRotation(FName("Projectile")));
-		Projectile->LaunchProjectile(LaunchSpeed);
-		LastFireTime = FPlatformTime::Seconds();
-		return;
-	}
-
-
-}
-
+//
+//void ATank::Firing() {
+//	if (!ensure(Barrel)) {
+//		return;
+//	}
+//	bool isReloaded = (FPlatformTime::Seconds() - LastFireTime) > ReloadTimeInSeconds;
+//	if (isReloaded) { //
+//		// spawn a projectile at the socket on the barrel
+//		auto Projectile = GetWorld()->SpawnActor<AProjectile>(ProjectileBlueprint, Barrel->GetSocketLocation(FName("Projectile")), Barrel->GetSocketRotation(FName("Projectile")));
+//		Projectile->LaunchProjectile(LaunchSpeed);
+//		LastFireTime = FPlatformTime::Seconds();
+//		return;
+//	}
+//
+//
+//}
+//
