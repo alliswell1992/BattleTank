@@ -38,7 +38,9 @@ public:
 	void Firing();
 	EFireStatus GetFireState();
 	UFUNCTION(BlueprintCallable, Category = "Firing")
-	int GetRoundLeft() const;
+	int32 GetRoundLeft() const;
+	UPROPERTY(EditAnywhere, Category = "Setup")
+	TSubclassOf<AProjectile> ProjectileBlueprint;
 private:
 	virtual void TickComponent(float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 	virtual void BeginPlay() override;
@@ -51,11 +53,12 @@ private:
 	//void MoveTarrelTowards(FVector); 
 	UPROPERTY(EditAnywhere, Category = "Firing")
 	float LaunchSpeed = 4000.;
-	UPROPERTY(EditAnywhere, Category = "Setup")
-	TSubclassOf<AProjectile> ProjectileBlueprint;
+
 	UPROPERTY(EditDefaultsOnly, Category = "Firing")
 	float ReloadTimeInSeconds = 3;
+	UPROPERTY(EditDefaultsOnly, Category = "Firing")
+	int32 RoundLeft = 3;
 	double LastFireTime = 0;
 	FVector AimDirection;
-	int RoundLeft = 3;
+
 };

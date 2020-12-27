@@ -131,7 +131,7 @@ EFireStatus UTankAimingComponent::GetFireState() {
 	return FireStatus;
 }
 
-int UTankAimingComponent::GetRoundLeft() const {
+int32 UTankAimingComponent::GetRoundLeft() const {
 	return RoundLeft;
 }
 

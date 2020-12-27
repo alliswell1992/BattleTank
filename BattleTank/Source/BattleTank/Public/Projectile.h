@@ -24,6 +24,13 @@ public:
 	virtual void Tick(float DeltaTime) override;
 	void LaunchProjectile(float Speed);
 private:
+	UFUNCTION()
+	void OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulsem, const FHitResult& Hit);
 	UProjectileMovementComponent* ProjectileMovementComponent = nullptr;
-
+	UPROPERTY(VisibleAnywhere, category="Components")
+	UStaticMeshComponent* CollisionMesh = nullptr;
+	UPROPERTY(VisibleAnywhere, category = "Components")
+	UParticleSystemComponent* LaunchBlast = nullptr;
+	UPROPERTY(VisibleAnywhere, category = "Components")
+	UParticleSystemComponent* ImpactBlast = nullptr;
 };
