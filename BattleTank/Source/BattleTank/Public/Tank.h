@@ -16,7 +16,7 @@ class BATTLETANK_API ATank : public APawn
 	GENERATED_BODY()
 protected:
 	// Called when the game starts or when spawned
-	virtual void BeginPlay() override;
+	//virtual void BeginPlay() override;
 	/*UPROPERTY(BlueprintReadOnly)
 	UTankAimingComponent* TankAimingComponent = nullptr;*/
 	//UPROPERTY(BlueprintReadOnly)
@@ -35,13 +35,25 @@ public:
 	float LaunchSpeed = 4000.; */// sensible starting value of 1000 m/s000000
 	//UFUNCTION(BlueprintCallable, Category = "Setup")
 	//void Firing();
+	//void AimAt(FVector HitLocation);
+	// call by engine when actor damage is dealt
+	virtual float TakeDamage(
+		float DamageAmount,
+		struct FDamageEvent const& DamageEvent,
+		class AController* EventInstigator,
+		AActor* DamageCauser
+		) override;
+	UFUNCTION(BlueprintPure, Category="Health")
+	float GetHealthPercent() const;
+private:
 	// Sets default values for this pawn's properties
 	ATank();
-	//void AimAt(FVector HitLocation);
-private:
-
 	//UTankBarrel* Barrel = nullptr;
 	//UPROPERTY(EditDefaultsOnly, Category = "Firing")
 	//float ReloadTimeInSeconds = 3;
 	//double LastFireTime = 0;
+	UPROPERTY(EditDefaultsOnly, Category = "Setup")
+	int32 StartingHealth = 100;
+	UPROPERTY(VisibleAnywhere, Category = "Health")
+	int32 CurrentHealth = StartingHealth;
 };
