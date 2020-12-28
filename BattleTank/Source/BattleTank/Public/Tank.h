@@ -10,6 +10,7 @@
 //class UTankAimingComponent;
 //class UTankTarrel;
 //class AProjectile;
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FDeathEvent);
 UCLASS()
 class BATTLETANK_API ATank : public APawn
 {
@@ -45,6 +46,7 @@ public:
 		) override;
 	UFUNCTION(BlueprintPure, Category="Health")
 	float GetHealthPercent() const;
+	FDeathEvent OnDeath;
 private:
 	// Sets default values for this pawn's properties
 	ATank();

@@ -11,16 +11,16 @@ UCLASS()
 class BATTLETANK_API ATankAIController : public AAIController
 {
 	GENERATED_BODY()
-public:
-	virtual void BeginPlay() override;
-	virtual void Tick(float DeltaTime) override;
 protected:
 	UPROPERTY(EditDefaultsOnly, Category = "Setup")
 	float AcceptanceRadius = 80000.;
 private:
+	virtual void BeginPlay() override;
+	virtual void Tick(float DeltaTime) override;
 	//ATank* GetControlledTank() const;
 	//ATank* GetPLayerTank() const;
 	// how close can ai tank get
-
-
+	UFUNCTION()
+	void OnPossedTankDeath();
+	virtual void SetPawn(APawn* InPawn) override;
 };
