@@ -16,13 +16,12 @@ ATank::ATank()
 float ATank::GetHealthPercent() const {
 	return (float)CurrentHealth / (float)StartingHealth;
 }
-
-// Called when the game starts or when spawned
-//void ATank::BeginPlay()
-//{
-//	Super::BeginPlay();// needed for BP begin play to run 
-//	//TankAimingComponent = FindComponentByClass<UTankAimingComponent>();
-//}
+void ATank::BeginPlay()
+{
+	Super::BeginPlay();// needed for BP begin play to run 
+	//TankAimingComponent = FindComponentByClass<UTankAimingComponent>();
+	CurrentHealth = StartingHealth;
+}
 
 //void ATank::AimAt(FVector HitLocation) {
 //	if (!ensure(TankAimingComponent)) { 

@@ -28,6 +28,9 @@ private:
 	void AimTowardsCrosshair();
 	// return an out parameter, true if hit landscape
 	bool GetSighRayHitLocation(FVector& OutHitLocation) const;
+	UFUNCTION()
+	void OnPossedTankDeath();
+	virtual void SetPawn(APawn* InPawn) override;
 	UPROPERTY(EditAnyWhere)
 	float CrosshairXLocation = 0.5f;
 	UPROPERTY(EditAnyWhere)

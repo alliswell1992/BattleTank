@@ -16,8 +16,6 @@ class BATTLETANK_API ATank : public APawn
 {
 	GENERATED_BODY()
 protected:
-	// Called when the game starts or when spawned
-	//virtual void BeginPlay() override;
 	/*UPROPERTY(BlueprintReadOnly)
 	UTankAimingComponent* TankAimingComponent = nullptr;*/
 	//UPROPERTY(BlueprintReadOnly)
@@ -50,6 +48,7 @@ public:
 private:
 	// Sets default values for this pawn's properties
 	ATank();
+	virtual void BeginPlay() override;
 	//UTankBarrel* Barrel = nullptr;
 	//UPROPERTY(EditDefaultsOnly, Category = "Firing")
 	//float ReloadTimeInSeconds = 3;
@@ -57,5 +56,5 @@ private:
 	UPROPERTY(EditDefaultsOnly, Category = "Setup")
 	int32 StartingHealth = 100;
 	UPROPERTY(VisibleAnywhere, Category = "Health")
-	int32 CurrentHealth = StartingHealth;
+	int32 CurrentHealth; // initialise in begin play
 };
