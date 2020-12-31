@@ -29,7 +29,7 @@ void ATankAIController::Tick(float DeltaTime) {
 	auto PlayerTank = GetWorld()->GetFirstPlayerController()->GetPawn();
 	auto ControlledTank = GetPawn();//Cast<ATank>(GetPawn());
 	auto AmingComponent = ControlledTank->FindComponentByClass<UTankAimingComponent>();
-	if (!ensure(PlayerTank&&ControlledTank)) {
+	if (!(PlayerTank&&ControlledTank)) {
 		return;
 	}
 	// move towards the player
