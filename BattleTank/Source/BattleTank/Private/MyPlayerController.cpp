@@ -15,6 +15,7 @@ void AMyPlayerController::BeginPlay() {
 	else{
 		UE_LOG(LogTemp, Warning, TEXT("controlled tank is %s"), *ControlledTank->GetName());
 	}*/
+	if (!GetPawn()) return;
 	auto AmingComponent = GetPawn()->FindComponentByClass<UTankAimingComponent>();
 	if (!ensure(AmingComponent)) {
 		return;
